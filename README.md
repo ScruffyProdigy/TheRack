@@ -2,14 +2,14 @@
 
 A simple rack implementation in Go
 
-run `go get github.com/HairyMezican/The-Rack/rack` to install
+run `go get github.com/HairyMezican/TheRack/rack` to install
 
 ## Examples
 
 	package main
 
 	import (
-	    "github.com/HairyMezican/The-Rack/rack"
+	    "github.com/HairyMezican/TheRack/rack"
 	    "net/http"
 	)
 
