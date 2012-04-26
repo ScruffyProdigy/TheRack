@@ -74,11 +74,11 @@ and so will the following code:
 		"net/http"
 	)
 
-	func HelloWorldWare(r *http.Request, vars rack.Vars, next rack.Next) (int, http.Header, []byte) {
+	var HelloWorldWare rack.Func = func(r *http.Request, vars rack.Vars, next rack.Next) (int, http.Header, []byte) {
 		return 200, make(http.Header), []byte("Hello World")
 	}
 
 	func main() {
 		conn := rack.HttpConnection(":3000")
-		rack.Run(conn, rack.Func(HelloWorldWare))
+		rack.Run(conn, HelloWorldWare)
 	}
