@@ -2,6 +2,8 @@
 
 A simple rack implementation in Go
 
+Please see http://github.com/HairyMezican/Middleware for some usable premade middleware
+
 run `go get github.com/HairyMezican/TheRack/rack` to install
 
 ## Examples
