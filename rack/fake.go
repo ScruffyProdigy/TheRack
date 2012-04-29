@@ -23,7 +23,7 @@ type FakeResponseWriter interface {
 func BlankResponse() FakeResponseWriter {
 	this := new(fake)
 	this.status = http.StatusOK
-	this.header = make(http.Header)
+	this.header = NewHeader()
 	this.message = make([]byte, 0)
 	return this
 }

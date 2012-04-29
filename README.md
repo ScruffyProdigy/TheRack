@@ -16,7 +16,7 @@ run `go get github.com/HairyMezican/TheRack/rack` to install
 	type HelloWare struct{}
 
 	func (HelloWare) Run(r *http.Request, vars rack.Vars, next rack.Next) (int, http.Header, []byte) {
-	    return http.StatusOK, make(http.Header), []byte("Hello " + vars["Object"].(string))
+	    return http.StatusOK, rack.NewHeader(), []byte("Hello " + vars["Object"].(string))
 	}
 
 	type WorldWare struct{}
@@ -41,7 +41,7 @@ The following code will do the same thing a different way:
 
 	import (
 		"fmt"
-		"github.com/HairyMezican/The-Rack/rack"
+		"github.com/HairyMezican/TheRack/rack"
 		"net/http"
 	)
 
@@ -70,12 +70,12 @@ and so will the following code:
 	package main
 
 	import (
-		"github.com/HairyMezican/The-Rack/rack"
+		"github.com/HairyMezican/TheRack/rack"
 		"net/http"
 	)
 
 	var HelloWorldWare rack.Func = func(r *http.Request, vars rack.Vars, next rack.Next) (int, http.Header, []byte) {
-		return 200, make(http.Header), []byte("Hello World")
+		return 200, rack.NewHeader(), []byte("Hello World")
 	}
 
 	func main() {

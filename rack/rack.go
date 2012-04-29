@@ -66,6 +66,11 @@ func (this Rack) Run(r *http.Request, vars Vars, next Next) (status int, header 
 	return ourNext()
 }
 
+// NewHeader() will create a new empty http.Header
+func NewHeader() http.Header {
+	return make(http.Header)
+}
+
 //Up is the public interface to the default Rack
 var Up *Rack = NewRack()
 
