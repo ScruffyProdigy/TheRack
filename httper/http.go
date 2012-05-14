@@ -338,7 +338,7 @@ type Deracker struct{
 
 func (this Deracker) Serve(r *http.Request, vars V, next Next) (int,http.Header,[]byte) {
 	vars.SetRequest(r)
-	this.m.Run(vars,func() {
+	this.m.Run(map[string]interface{}(vars),func() {
 		status,header,message := next()
 		vars.Status(status)
 		vars.SetHeaders(header)
