@@ -23,13 +23,13 @@ type Connection interface {
 // it returns the http Status, the headers, and a byte encoded response
 // typically previous middleware will take the results and manipulate them as necessary
 type Middleware interface {
-	Run(vars Vars, next func())
+	Run(vars map[string]interface{}, next func())
 }
 
 // an ordinary function can satisfy the middleware interface, if you cast it into a rack.Func
-type Func func(vars Vars, next func())
+type Func func(vars map[string]interface{}, next func())
 
-func (this Func) Run(vars Vars, next func()) {
+func (this Func) Run(vars map[string]interface{}, next func()) {
 	this(vars, next)
 }
 
@@ -51,17 +51,24 @@ func (this *Rack) Add(m Middleware) {
 	*this = append(*this, m)
 }
 
-func (this Rack) Run(vars Vars, next func()) {
+func (this Rack) Run(vars map[string]interface{}, next func()) {
 	index := -1
 	var ourNext func()
 	ourNext = func() {
 		index++
+		defer func(){index--}()	//if anything branches, we want the index to sync up correctly
+
 		if index >= len(this) {
 			next()
 		} else {
 			this[index].Run(vars, ourNext)
 		}
-		index--
 	}
 	ourNext()
 }
+
+func NewVars() map[string] interface{} {
+	return make(map[string] interface{})
+}
+
+
