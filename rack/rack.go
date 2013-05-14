@@ -1,13 +1,14 @@
 /*
-	The Rack package allows you to break down your web server into smaller functions (called Middleware)
+	The Rack package allows you to break down a task into a series of smaller functions (called Middleware)
 
 	Each Middleware gets inserted into a Rack, and then rack will proceed to call them one by one.
 	Each one returns the combined results to the previous one, which can then be adjusted or altered
 
-	This works as an alternative to simply writing to the provided http.ResponseWriter
-	The advantage to using this method is an easy way to abstract away different parts of the program,
+	This ends up being very useful in conjuction with httper for websites, 
+	as a easier alternative to using the provided http.ResponseWriter.
+	The rack allows us to abstract away different parts of the program,
 	which allows us to easily reuse smaller parts of the program in new websites.
-	Also, we now have the ability to make adjustments to other parts of the program:
+	Also, we now have the ability to make alter our response:
 	Once something has been written to the ResponseWriter, there's no way to undo it, or to even change the headers.
 	Middleware will frequently change the responses handed down by later Middleware, or write headers even after we know what most of the response will be
 */
@@ -18,11 +19,10 @@ type Connection interface {
 	Go(Middleware) error
 }
 
-// the "Middleware" is the interface that we use to allow different pieces of your web server to communicate with one another
-// "Run" takes in the http Request that we've received, a map of all of the variables, and a way to access the next part of the server
-// it returns the http Status, the headers, and a byte encoded response
+// Middleware is the interface that we use to allow different pieces of your web server to communicate with one another
 // typically previous middleware will take the results and manipulate them as necessary
 type Middleware interface {
+	// Run takes a map of all of the variables, and a way to access the next part of the server
 	Run(vars map[string]interface{}, next func())
 }
 
@@ -33,11 +33,11 @@ func (this Func) Run(vars map[string]interface{}, next func()) {
 	this(vars, next)
 }
 
-// a "Rack" is a collection of middleware that is also a middleware itself
+// Rack is a collection of middleware that is also a middleware itself
 // when run, it simply runs through each of the middleware within it, passing each one a link to the next one
 type Rack []Middleware
 
-// "New" is a utility function to get a basic rack
+// New is a utility function to get a basic rack
 // By default, it assumes that you want at least 2 middleware within it, and makes enough room for them
 // it will accomodate as many as you need, though
 func New() *Rack {
@@ -45,7 +45,7 @@ func New() *Rack {
 	return &rack
 }
 
-// "Add" will put another middleware into the list
+// Add will put another middleware into the list
 // it is order dependent, so make sure any dependent middleware are put in after any required middleware
 func (this *Rack) Add(m Middleware) {
 	*this = append(*this, m)
@@ -56,7 +56,7 @@ func (this Rack) Run(vars map[string]interface{}, next func()) {
 	var ourNext func()
 	ourNext = func() {
 		index++
-		defer func(){index--}()	//if anything branches, we want the index to sync up correctly
+		defer func() { index-- }() //if anything branches, we want the index to sync up correctly
 
 		if index >= len(this) {
 			next()
@@ -67,8 +67,7 @@ func (this Rack) Run(vars map[string]interface{}, next func()) {
 	ourNext()
 }
 
-func NewVars() map[string] interface{} {
-	return make(map[string] interface{})
+//NewVars creates a new set of variables
+func NewVars() map[string]interface{} {
+	return make(map[string]interface{})
 }
-
-

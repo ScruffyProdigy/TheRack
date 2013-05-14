@@ -2,17 +2,16 @@
 
 A simple rack implementation in Go
 
-Please see http://github.com/HairyMezican/Middleware for some usable premade middleware
+Please see http://github.com/ScruffyProdigy/Middleware for some usable premade middleware
 
-run `go get github.com/HairyMezican/TheRack/rack` to install
+run `go get github.com/ScruffyProdigy/TheRack/...` to install
 
 ## Examples
-
 	package main
 
 	import (
-		"../TheRack/httper"
-		"../TheRack/rack"
+		"github.com/ScruffyProdigy/TheRack/httper"
+		"github.com/ScruffyProdigy/TheRack/rack"
 	)
 
 	type HelloWare struct{}
@@ -44,8 +43,8 @@ The following code will do the same thing a different way:
 	package main
 
 	import (
-		"../TheRack/httper"
-		"../TheRack/rack"
+		"github.com/ScruffyProdigy/TheRack/httper"
+		"github.com/ScruffyProdigy/TheRack/rack"
 		"fmt"
 		"net/http"
 	)
@@ -80,8 +79,8 @@ and if you just want something short and simple, so will the following code:
 	package main
 
 	import (
-		"../TheRack/httper"
-		"../TheRack/rack"
+		"github.com/ScruffyProdigy/TheRack/httper"
+		"github.com/ScruffyProdigy/TheRack/rack"
 	)
 
 	var HelloWorldWare rack.Func = func(vars map[string]interface{}, next func()) {
@@ -93,3 +92,9 @@ and if you just want something short and simple, so will the following code:
 		conn.Go(HelloWorldWare)
 	}
 	
+## Documentation
+
+typically these get used together
+
+rack - http://godoc.org/github.com/ScruffyProdigy/TheRack/rack
+httper - http://godoc.org/github.com/ScruffyProdigy/TheRack/httper
