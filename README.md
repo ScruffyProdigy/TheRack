@@ -96,5 +96,5 @@ and if you just want something short and simple, so will the following code:
 
 typically these get used together
 
-rack - http://godoc.org/github.com/ScruffyProdigy/TheRack/rack
-httper - http://godoc.org/github.com/ScruffyProdigy/TheRack/httper
+* rack - http://godoc.org/github.com/ScruffyProdigy/TheRack/rack
+* httper - http://godoc.org/github.com/ScruffyProdigy/TheRack/httper
