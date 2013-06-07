@@ -23,11 +23,11 @@ const (
 	hijackedIndex   = "http.Hijacked"
 )
 
-type handler struct {
-	m rack.Middleware
+type Handler struct {
+	rack.Middleware
 }
 
-func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	vars := rack.NewVars()
 	vars[requestIndex] = r
 	vars[originalRWIndex] = w
@@ -83,7 +83,7 @@ type httpConnection struct {
 }
 
 func (this *httpConnection) Go(m rack.Middleware) error {
-	return http.ListenAndServe(this.address, handler{m})
+	return http.ListenAndServe(this.address, Handler{m})
 }
 
 //HttpConnection() provides a basic HTTP Connection; good for a basic Website
@@ -100,7 +100,7 @@ type httpsConnection struct {
 }
 
 func (this *httpsConnection) Go(m rack.Middleware) error {
-	return http.ListenAndServeTLS(this.address, this.certFile, this.keyFile, handler{m})
+	return http.ListenAndServeTLS(this.address, this.certFile, this.keyFile, Handler{m})
 }
 
 //HttpsConnection needs a certFile and a keyFile, but provides a more secure HTTPS connection for encrypted communication
