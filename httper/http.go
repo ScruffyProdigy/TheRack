@@ -31,7 +31,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	vars := rack.NewVars()
 	vars[requestIndex] = r
 	vars[originalRWIndex] = w
-	h.m.Run(vars, func() {
+	h.Run(vars, func() {
 		//none of the middleware handled the request
 		//status is now "Not Found"
 		if _, ok := vars[statusIndex]; !ok {
